@@ -1,6 +1,7 @@
 use std::io;
 use std::fs::{self};
 use std::path::Path;
+use chrono::prelude::*;
 
 use exif::{DateTime, In, Value, Tag};
 
@@ -15,7 +16,9 @@ fn process_raw() {
 }
 
 fn create_dir_structure(year: u16, month: u8, day: u8) {
-    let child_dir_name = format!("{}-0{}-0{}", &year, &month, &day);
+    let date_time = Utc.ymd(year.into(), month.into(), day.into());
+    let date_time_formatted = format!("{}", date_time.format("%Y-%m-%d"));
+    let child_dir_name = date_time_formatted;
     let parent_dir_name = format!("{}", &year);
 
     let parent_path = Path::new(&parent_dir_name);
